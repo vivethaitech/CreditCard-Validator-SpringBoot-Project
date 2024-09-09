@@ -1,30 +1,33 @@
 package com.developer.controller;
 
-import com.developer.service.CreditCardValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+
+import com.developer.service.CreditCardValidatorService;
 
 @Controller
 public class CreditCardValidatorController {
 
     @Autowired
-    private CreditCardValidatorService validatorService;
+    private CreditCardValidatorService service;
 
-    @GetMapping("/")
-    public String index() {
-        return "index"; // This should match the file under 'static' folder
-    }
 
     @GetMapping("/validate")
-    @ResponseBody
-    public String validateCard(@RequestParam("cardNumber") long cardNumber) {
-        boolean isValid = validatorService.validateCreditCard(cardNumber);
-        return isValid ? "Valid Credit Card Number" : "Invalid Credit Card Number";
+    public String validateCard(@RequestParam Long cardNumber, Model model) {
+        if (cardNumber == null) {
+            model.addAttribute("result", "Credit card number is required.");
+        } else {
+            boolean isValid = service.validateCreditCard(cardNumber);
+            String result = isValid ? "Valid Credit Card Number" : "Invalid Credit Card Number";
+            model.addAttribute("result", result);
+        }
+        return "index";
+    }
+
     }
     
    
-}
+

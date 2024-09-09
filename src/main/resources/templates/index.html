@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <title>Credit Card Validator</title>
 </head>
 <body> 
     <div class="container">
         <h1>Credit Card Validator</h1>
         <h3>Enter your credit card number</h3>
-        <input type="number" name="num" id="num" ><br>
-        <button id="btn">Check</button>
-        <div id="result"></div>
+        <form action="/validate" method="get">
+            <input type="number" name="cardNumber" id="num" required><br>
+            <button type="submit"id="btn">Check</button>
+        </form>
+        <div id="result">
+            <p th:text="${result}"></p>
+        </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
